@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+ <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+<body class="bg-gray-100 text-sm">
+    <div class="flex justify-center items-center pt-20">
+        <div class="col-5  bg-white shadow-2xl rounded-xl p-8">
+            <h1 class="text-3xl font-bold mb-6 flex justify-between">
+                Créer un compte
+                <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" class="mx-2 h-10 w-auto" />
+            </h1>
+
+
+            <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">S'inscrire</button>
+            </form>
+            <a href="{% url 'login' %}">Déjà un compte ? Connecte-toi</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+# =========================================
+# Django project .gitignore
+# =========================================
+
+# 🧠 Python cache / bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🧩 Django specific
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+static/
+local_settings.py
+
+# 📦 Environnements virtuels
+venv/
+env/
+ENV/
+.venv/
+.python-version
+
+# 🔑 Fichiers d'environnement / secrets
+*.env
+.env.*
+!.env.example  # tu peux garder un exemple de configuration sans secrets
+
+# 🧪 Tests et coverage
+.coverage
+.tox/
+.nox/
+*.cover
+coverage.xml
+htmlcov/
+
+# 🧰 IDEs et éditeurs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 📂 OS system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
+
+# 🧱 Build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# 🧪 Jupyter / notebooks (si tu en utilises)
+.ipynb_checkpoints
+
+# 🔧 PyInstaller
+*.manifest
+*.spec
+
+# 🧩 Django Migrations (optionnel)
+# -> Tu peux ignorer les migrations si tu veux les régénérer localement à chaque fois.
+# ⚠️ MAIS généralement on les garde en production.
+# */migrations/*.py
+# !*/migrations/__init__.py

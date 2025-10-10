@@ -1,14 +1,21 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
-class User(models.Model):
-    email=models.EmailField()
-    nom=models.CharField(max_length=100)
-    prenom=models.CharField(max_length=100)
-    date_naissance=models.DateField()
-    lieu_naissance=models.CharField(max_length=100)
-    sex=models.CharField(max_length=20)
-    phone = models.CharField(max_length=20)
+class User(AbstractUser):
+    username = None  
+    email = models.EmailField(unique=True, null=False, blank=False)
+    nom = models.CharField(max_length=100, null=True, blank=True)
+    prenom = models.CharField(max_length=100, null=True, blank=True)
+    date_naissance = models.DateField(null=True, blank=True)
+    lieu_naissance = models.CharField(max_length=100, null=True, blank=True)
+    sex = models.CharField(max_length=20, null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    province = models.CharField(max_length=100, null=True, blank=True)
+    postal_code = models.CharField(max_length=100, null=True, blank=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.nom
+        return f"{self.nom or ''} {self.prenom or ''}".strip()

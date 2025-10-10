@@ -10,12 +10,15 @@ import sys
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
+
         if form.is_valid():
             user = form.save()
+
             login(request, user)
             messages.success(request, "Inscription réussie ✅")
             return redirect('home')
     else:
+        print('testtttttttttttttttt2')
         form = RegisterForm()
     return render(request, 'app_user/register.html', {'form': form})
 
@@ -23,10 +26,12 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
+        print('herrrr')
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            print('atoooo')
             login(request, user)
             return redirect('home')
         else:
