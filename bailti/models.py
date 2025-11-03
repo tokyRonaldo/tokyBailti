@@ -19,3 +19,53 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.nom or ''} {self.prenom or ''}".strip()
+
+
+# -------------------
+# Table des propriétés
+# -------------------
+class Property(models.Model):
+    identifiant = models.CharField(max_length=50, unique=True)
+    adresse = models.CharField(max_length=255)
+    superficie = models.DecimalField(max_digits=10, decimal_places=2)  # exemple : 125.50 m²
+    loyer = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True, null=True)
+    meublé = models.BooleanField(default=True)
+    type = models.CharField(max_length=50)  # ex: Appartement, Maison, Studio, etc.
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="proprietes")
+
+    def __str__(self):
+        return f"{self.identifiant} - {self.adresse}"
+
+
+# -------------------
+# Table des locataires
+# -------------------
+class Locataire(models.Model):
+    nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
+    date_naissance = models.DateField()
+    lieu_naissance = models.CharField(max_length=150)
+    revenu_mensuels = models.DecimalField(max_digits=10, decimal_places=2)
+    adresse = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.prenom} {self.nom}"
+
+
+# -------------------
+# Table des locations
+# -------------------
+class Location(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="locations")
+    locataire = models.ForeignKey(Locataire, on_delete=models.CASCADE, related_name="locations")
+    date_debut = models.DateField()
+    date_fin = models.DateField(null=True, blank=True)
+    loyer = models.DecimalField(max_digits=10, decimal_places=2)
+    garantie = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    commentaire = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Location de {self.locataire} - {self.property}"

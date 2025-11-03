@@ -1,0 +1,99 @@
+{% extends 'bailti/base.html' %}
+
+   {% block content %}
+
+   <div class="container mx-auto px-4 ">
+      <div class="flex justify-between items-center py-5">
+         <div class="mes-proprietes ">
+            <h2 class="text-5xl font-bold my-4">Mes favories</h2>
+            <p class="text-xl">Gérer vos bien favories</p>
+         </div>
+      </div>
+
+      <div class="flex bg-white mt-8 mb-4 search-bar gap-4 items-center border border-blue-100 rounded-2xl shadow-2xl w-1/2 p-5 text-xl focus-within:border-blue-300 focus-within:border-6" >
+         <i class="fa fa-search"></i>
+         <input type="text" class="border-none focus:border-none focus:outline-none focus:ring-0 w-full" placeholder="rechercher une proprieté à louer...">
+      </div>
+
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-8">
+         <div class="card  relative h-150 bg-white rounded-2xl border-blue-100 border-1 shadow-lg hover:opacity-95 overflow-hidden">
+            <div class="flex absolute w-full top-2 left-0  justify-between px-5 pb-3 pt-5 z-[9999]">
+               <h1 class="text-3xl"> titre</h1>
+               <div class="">
+                  <el-dropdown class="inline-block bg-gray-100 border border-blue-100 rounded-2xl shadow-2xl">
+                     <button class="inline-flex w-full justify-center gap-x-1.5 rounded-md  px-2 py-3 text-xl font-semibold inset-ring-1 inset-ring-white/5 hover:bg-white/20">
+                        <i class="fa fa-ellipsis-vertical"></i>
+                     </button>
+
+                     <el-menu anchor="bottom end" popover class="w-35 bg-gray-600 origin-top-right rounded-md  outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+                        <div class="py-1">
+                           <a href="#" class="block px-4 py-2 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Voir</a>
+                           <a href="#" class="block px-4 py-2 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Editer</a>
+                           <a href="#" class="block px-4 py-2 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Supprimer</a>
+                        </div>
+                     </el-menu>
+                     </el-dropdown>
+               </div>
+            </div>
+            <div class="flex w-full pb-2 pt-6">
+               {% load static %}
+               <img src="{% static 'img/27397(1).jpg' %}" alt="" class="object-cover w-full h-70">
+            </div>
+            <div class="flex flex-col px-6 gap-1">
+               <h1 class="text-4xl font-bold"> titre</h1>
+               <p class="text-gray-500 text-xl">Adresse</p>
+               <p class="text-gray-500 text-xl flex-wrap">Description</p>
+               <div class="mt-5 flex justify-between items-center">
+                  <div class="flex flex-col">
+                     <h1 class="text-5xl font-bold">200 £</h1>
+                     <p class="text-gray-500 text-xl">par mois</p>
+
+                  </div>
+                  <button class="rounded-2xl shadow-2xl  border-1 border-blue-100 p-3 hover:bg-blue-400 hover:text-white">Voir détails</button>
+               </div>
+            </div>
+
+         </div>
+         <div class="card h-150 bg-white rounded-2xl border-blue-100 border-1 shadow-lg">
+            <div class="flex justify-between px-5 pb-3 pt-5">
+               <h1 class="text-2xl"> titre</h1>
+               <div class="flex-col">
+                  <p class="text-black-100 text-2xs"> loyer</p>
+                  <span class="text-red-400 text-xl"> 360 £</span>
+               </div>
+            </div>
+            <div class="flex px-5 pb-2">
+               {% load static %}
+               <img src="{% static 'img/aaron_ryan.jpg - deleted by 401401 2024-01-18_08-01' %}" alt="" class="object-cover w-full h-110">
+            </div>
+            <div class="flex justify-center gap-2 pb-2">
+               <button class="cursor-pointer text-2xl hover:text-3xl hover:opacity-60"><i class="fa fa-eye"></i></button>
+               <button class="cursor-pointer text-2xl text-blue-400 hover:text-3xl hover:opacity-60"><i class="fa fa-edit"></i></button>
+               <button class="cursor-pointer text-2xl text-red-400 hover:text-3xl hover:opacity-60"><i class="fa fa-trash"></i></button>
+            </div>
+         </div>
+         <div class="card h-150 bg-white rounded-2xl border-blue-100 sborder-1 shadow-lg">
+            <div class="flex justify-between px-5 pb-3 pt-5">
+               <h1 class="text-2xl"> titre</h1>
+               <div class="flex-col">
+                  <p class="text-black-100 text-2xs"> loyer</p>
+                  <span class="text-red-400 text-xl"> 360 £</span>
+               </div>
+            </div>
+            <div class="flex px-5 pb-2">
+               {% load static %}
+               <img src="{% static 'img/istockphoto-1297159365-1024x1024.jpg_1729673537.jpg_1729857047.jpg' %}" alt="" class="object-cover w-full h-110">
+            </div>
+            <div class="flex justify-center gap-2 pb-2">
+               <button class="cursor-pointer text-2xl hover:text-3xl hover:opacity-60"><i class="fa fa-eye"></i></button>
+               <button class="cursor-pointer text-2xl text-blue-400 hover:text-3xl hover:opacity-60"><i class="fa fa-edit"></i></button>
+               <button class="cursor-pointer text-2xl text-red-400 hover:text-3xl hover:opacity-60"><i class="fa fa-trash"></i></button>
+            </div>
+         </div>
+
+
+      </div>
+
+   </div>
+    {% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'bailti/base.html' %}
+
+   {% block content %}
+
+   <div class="container mx-auto px-4">
+      <div class="flex items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
+         <div class="mes-proprietes ">
+            <h2 class="text-5xl font-bold my-4">Mes Proprietés</h2>
+            <p class="text-xl">Gérer vos bien immobilier</p>
+         </div>
+      </div>
+      <div class="form-create border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-8">
+
+
+      <form class="mx-auto" action="{% url 'locataire_store' %}" method="POST">
+            {% csrf_token %}
+
+         <div class="mb-5">
+            <label for="identifiant" class="block mb-2 text-md font-medium ">Identifiant *</label>
+            <input type="text" name="identifiant" id="identifiant" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  placeholder="bien_identifiant" required >
+         </div>
+         <div class="mb-5">
+            <label for="type" class="block mb-2 text-md font-medium ">Type *</label>
+            <select name="type" name="type" id="type" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+               <option value="maison">Maison</option>
+               <option value="appartement">Appartement</option>
+               <option value="studio">Studio</option>
+               <option value="villa">Villa</option>
+            </select>
+         </div>
+
+         <div class="mb-5">
+            <label for="adresse" class="block mb-2 text-md font-medium ">Adresse *</label>
+            <input type="text" id="adresse" name="adresse" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  required >
+         </div>
+         <div class="mb-5">
+            <label for="superficie" class="block mb-2 text-md font-medium ">Superificie *</label>
+            <input type="number" id="superficie" name="superficie" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  required >
+         </div>
+         <div class="mb-5">
+            <label for="loyer" class="block mb-2 text-md font-medium ">Loyer*</label>
+            <input type="number" id="loyer" name="loyer" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="meuble" class="block mb-2 text-md font-medium ">Meublé *</label>
+            <input type="checkbox" name="meuble" id="meuble" class="w-8 shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block">
+         </div>
+
+         <div class="mb-5">
+            <label for="description" class="block mb-2 text-sm font-medium ">Description *</label>
+            <textarea id="description" name="description" class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required ></textarea>
+         </div>
+         <div class="flex justify-end">
+            <button type="submit" class="text-white mt-6 bg-blue-700 cursor-pointer hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistrer</button>
+         </div>
+         </form>
+
+      </div>
+
+
+
+   </div>
+    {% endblock %}
