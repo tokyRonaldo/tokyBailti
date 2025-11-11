@@ -1,0 +1,81 @@
+{% extends 'bailti/base.html' %}
+
+   {% block content %}
+
+   <div class="container mx-auto px-4">
+      <div class="flex items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
+         <div class="mes-proprietes ">
+            <h2 class="text-5xl font-bold my-4">Locations</h2>
+            <p class="text-xl">Gérer mes locations</p>
+         </div>
+      </div>
+      <div class="form-create border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-8">
+
+
+      <form class="mx-auto" action="{% url 'location_store' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+         <div class="mb-5">
+            <label for="identifiant" class="block mb-2 text-md font-medium ">Identifiant *</label>
+            <input type="text" name="identifiant" id="identifiant" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required >
+         </div>
+
+         <div class="mb-5">
+            <label for="property" class="block mb-2 text-md font-medium ">Bien *</label>
+            <select name="property" id="property" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+               {% for property in properties %}
+                  <option value="{{property.id}}">{{property.identifiant}}</option>
+               {% endfor %}
+ 
+            </select>
+         </div>
+
+         <div class="mb-5">
+            <label for="locataire" class="block mb-2 text-md font-medium ">Locataire *</label>
+            <select name="locataire" id="locataire" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+               {% for locataire in locataires %}
+                  <option value="{{locataire.id}}">{{locataire.nom}} {{locataire.prenom}}</option>
+               {% endfor %}
+ 
+            </select>
+         </div>
+
+         <div class="mb-5">
+            <label for="date_debut" class="block mb-2 text-md font-medium ">Date début *</label>
+            <input type="date" id="date_debut" name="date_debut" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="date_fin" class="block mb-2 text-md font-medium ">Date fin *</label>
+            <input type="date" id="date_fin" name="date_fin" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+
+         <div class="mb-5">
+            <label for="lieu_naissance" class="block mb-2 text-md font-medium ">Lieu de naissance*</label>
+            <input type="text" id="lieu_naissance" name="lieu_naissance" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="loyer" class="block mb-2 text-md font-medium ">Loyer *</label>
+            <input type="number" id="loyer" name="loyer" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="garantie" class="block mb-2 text-md font-medium ">Garantie </label>
+            <input type="text" id="garantie" name="garantie" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+
+         <div class="mb-5">
+            <label for="commentaire" class="block mb-2 text-sm font-medium ">Commentaire *</label>
+            <textarea id="commentaire" name="commentaire" class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required ></textarea>
+         </div>
+
+
+         <div class="flex justify-end">
+            <button type="submit" class="text-white mt-6 bg-indigo-700 cursor-pointer hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistrer</button>
+         </div>
+         </form>
+
+      </div>
+
+
+
+   </div>
+    {% endblock %}

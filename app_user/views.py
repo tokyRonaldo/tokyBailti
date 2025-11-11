@@ -16,7 +16,7 @@ def register_view(request):
 
             login(request, user)
             messages.success(request, "Inscription réussie ✅")
-            return redirect('home')
+            return redirect('dashboard')
     else:
         print('testtttttttttttttttt2')
         form = RegisterForm()
@@ -33,7 +33,7 @@ def login_view(request):
         if user is not None:
             print('atoooo')
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
         else:
             messages.error(request, "Nom d’utilisateur ou mot de passe incorrect ❌")
     return render(request, 'app_user/login.html')

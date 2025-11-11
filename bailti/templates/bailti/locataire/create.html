@@ -1,0 +1,73 @@
+{% extends 'bailti/base.html' %}
+
+   {% block content %}
+
+   <div class="container mx-auto px-4">
+      <div class="flex items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
+         <div class="mes-proprietes ">
+            <h2 class="text-5xl font-bold my-4">Locataires</h2>
+            <p class="text-xl">Gérer les locataires</p>
+         </div>
+      </div>
+      <div class="form-create border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-8">
+
+
+      <form class="mx-auto" action="{% url 'locataire_store' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+         <div class="mb-5">
+            <label for="nom" class="block mb-2 text-md font-medium ">Nom *</label>
+            <input type="text" name="nom" id="nom" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required >
+         </div>
+
+         <div class="mb-5">
+            <label for="prenom" class="block mb-2 text-md font-medium ">Prenom *</label>
+            <input type="text" id="prenom" name="prenom" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  required >
+         </div>
+         <div class="mb-8 mt-10 gap-5">
+            <label class="mr-5">
+               <input type="radio" name="sex" class="w-5 h-5" value="Homme" > <span class=" text-gray-900 text-sm ">Homme</span> 
+            </label>
+
+            <label>
+               <input type="radio" name="sex" class="w-5 h-5" value="Femme"> <span class=" text-gray-900 text-sm ">Femme</span>
+            </label>
+            </div>
+         <div class="mb-5">
+            <label for="mobile" class="block mb-2 text-md font-medium ">Mobile *</label>
+            <input type="text" id="mobile" name="mobile" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  required >
+         </div>
+         <div class="mb-5">
+            <label for="email" class="block mb-2 text-md font-medium ">Email*</label>
+            <input type="email" id="email" name="email" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="date_naissance" class="block mb-2 text-md font-medium ">Date de naissance *</label>
+            <input type="date" id="date_naissance" name="date_naissance" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="lieu_naissance" class="block mb-2 text-md font-medium ">Lieu de naissance*</label>
+            <input type="text" id="lieu_naissance" name="lieu_naissance" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="revenu_mensuels" class="block mb-2 text-md font-medium ">Revenu mensuels *</label>
+            <input type="number" id="revenu_mensuels" name="revenu_mensuels" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+         <div class="mb-5">
+            <label for="adresse" class="block mb-2 text-md font-medium ">Adresse*</label>
+            <input type="text" id="adresse" name="adresse" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
+         </div>
+
+
+
+         <div class="flex justify-end">
+            <button type="submit" class="text-white mt-6 bg-indigo-700 cursor-pointer hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistrer</button>
+         </div>
+         </form>
+
+      </div>
+
+
+
+   </div>
+    {% endblock %}

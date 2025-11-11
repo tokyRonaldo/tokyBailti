@@ -13,6 +13,14 @@ class User(AbstractUser):
     city = models.CharField(max_length=100, null=True, blank=True)
     province = models.CharField(max_length=100, null=True, blank=True)
     postal_code = models.CharField(max_length=100, null=True, blank=True)
+    adresse = models.CharField(max_length=100, null=True, blank=True)
+    ROLE_CHOICES = [
+        ('admin', 'Administrateur'),
+        ('proprietaire', 'Proprietaire'),
+        ('user', 'Utilisateur'),
+        ('locataire', 'Locataire'),
+    ]
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='proprietaire')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -33,6 +41,7 @@ class Property(models.Model):
     meublé = models.BooleanField(default=True)
     type = models.CharField(max_length=50)  # ex: Appartement, Maison, Studio, etc.
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="proprietes")
+    image = models.ImageField(upload_to='properties/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.identifiant} - {self.adresse}"
@@ -50,6 +59,9 @@ class Locataire(models.Model):
     lieu_naissance = models.CharField(max_length=150)
     revenu_mensuels = models.DecimalField(max_digits=10, decimal_places=2)
     adresse = models.CharField(max_length=255)
+    user_locataire = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_locataire", null=True)
+    proprietaire_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="proprietaire_user" , null=True)
+
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"

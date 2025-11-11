@@ -1,0 +1,90 @@
+{% extends 'bailti/base.html' %}
+
+   {% block content %}
+
+   <div class="container mx-auto px-4 ">
+      <div class="flex justify-between items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
+         <div class="mes-proprietes ">
+            <h2 class="text-5xl font-bold my-4">Mes Proprietés</h2>
+            <p class="text-xl">Gérer vos bien immobilier</p>
+         </div>
+         <div class="btn-add-propriete">
+            <a href="{% url 'locataire_create' %} " class="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded">
+               <i class="fa fa-plus"></i>
+               Ajouter une proprieté
+            </a>
+         </div>
+      </div>
+
+      <div class="flex mt-8 mb-4 bg-white search-bar gap-4 items-center border border-blue-100 rounded-2xl shadow-2xl w-1/2 p-5 text-xl focus-within:border-blue-300 focus-within:border-6" >
+         <i class="fa fa-search"></i>
+         <input type="text" class="border-none focus:border-none focus:outline-none focus:ring-0 w-full" placeholder="rechercher une proprieté à louer...">
+      </div>
+
+
+
+
+
+    <div class="relative overflow-x-auto bg-white shadow-md sm:rounded-2xl py-6 my-10">
+        <table class="w-full text-sm text-left bg-white rtl:text-right py-8">
+            <thead class="text-lg uppercase bg-sky-200 ">
+                <tr>
+                    <th scope="col" class="px-6 py-6">
+                        Nom
+                    </th>
+                    <th scope="col" class="px-6 py-6">
+                        Prénom
+                    </th>
+                    <th scope="col" class="px-6 py-6">
+                        Mobile
+                    </th>
+                    <th scope="col" class="px-6 py-6">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-6">
+                        Adresse
+                    </th>
+                    <th scope="col" class="px-6 py-6">
+                        <span class="sr-only">Edit</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-lg">
+               {% for locataire in locataires %}
+
+                  <tr class="bg-white border-b border-gray-100 hover:bg-neutral-200 p-3">
+                     <th scope="row" class="px-6 py-5 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                           {{ locataire.nom }}
+                     </th>
+                     <td class="px-6 py-5">
+                           {{ locataire.prenom }}
+                     </td>
+                     <td class="px-6 py-5">
+                           {{ locataire.mobile }}
+                     </td>
+                     <td class="px-6 py-5">
+                        {{ locataire.email }}
+                     </td>
+                     <td class="px-6 py-5">
+                           {{ locataire.adresse }}
+                     </td>
+
+                     <td class="px-6 py-5 text-right">
+                           <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                     </td>
+                  </tr>
+               {% endfor %}
+               
+            </tbody>
+        </table>
+    </div>
+
+
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-8">
+
+
+      </div>
+
+   </div>
+    {% endblock %}

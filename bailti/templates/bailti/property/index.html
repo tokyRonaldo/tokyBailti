@@ -9,7 +9,7 @@
             <p class="text-xl">Gérer vos bien immobilier</p>
          </div>
          <div class="btn-add-propriete">
-            <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">
+            <button class="bg-indigo-500 hover:indigo-blue-400 text-white font-bold py-2 px-4 rounded">
                <i class="fa fa-plus"></i>
                Ajouter une proprieté
             </button>
@@ -23,11 +23,12 @@
 
 
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-8">
+         {% for property in properties %}
          <div class="card  relative h-150 bg-white rounded-2xl border-blue-100 border-1 shadow-lg hover:opacity-95 overflow-hidden">
             <div class="flex absolute w-full top-2 left-0  justify-between px-5 pb-3 pt-5 z-[9999]">
-               <h1 class="text-3xl"> titre</h1>
+               <h1 class="text-3xl"> {{ property.identifiant }}</h1>
                <div class="">
-                  <el-dropdown class="inline-block bg-gray-100 border border-blue-100 rounded-2xl shadow-2xl">
+                  <el-dropdown class="inline-block bg-gray-100 border border-neutral-400 rounded-2xl shadow-2xl">
                      <button class="inline-flex w-full justify-center gap-x-1.5 rounded-md  px-2 py-3 text-xl font-semibold inset-ring-1 inset-ring-white/5 hover:bg-white/20">
                         <i class="fa fa-ellipsis-vertical"></i>
                      </button>
@@ -44,7 +45,13 @@
             </div>
             <div class="flex w-full pb-2 pt-6">
                {% load static %}
-               <img src="{% static 'img/27397(1).jpg' %}" alt="" class="object-cover w-full h-70">
+
+               {% if property.image %}
+                  <img src="{{ property.image.url }}" alt="Image du bien" class="object-cover w-full h-70">
+               {% else %}
+                  <img src="{% static 'img/27397(1).jpg' %}" alt="Image par défaut" class="object-cover w-full h-70">
+               {% endif %}
+               
             </div>
             <div class="flex flex-col px-6 gap-1">
                <h1 class="text-4xl font-bold"> titre</h1>
@@ -56,11 +63,12 @@
                      <p class="text-gray-500 text-xl">par mois</p>
 
                   </div>
-                  <button class="rounded-2xl shadow-2xl  border-1 border-blue-100 p-3 hover:bg-blue-400 hover:text-white">Voir détails</button>
+                  <button class="rounded-2xl shadow-2xl bg-indigo-600 text-white border-1 border-blue-100 p-3 hover:opacity-60 ">Voir détails</button>
                </div>
             </div>
 
          </div>
+         {% endfor %}
          <div class="card h-150 bg-white rounded-2xl border-blue-100 border-1 shadow-lg">
             <div class="flex justify-between px-5 pb-3 pt-5">
                <h1 class="text-2xl"> titre</h1>
