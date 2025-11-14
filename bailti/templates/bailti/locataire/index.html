@@ -85,6 +85,32 @@
 
 
       </div>
+               {% if messages %}
+            {% for message in messages %}
+            toast.{{message.tags}}("{{message}}")
+            {% endfor %}
+         {% endif %}
 
    </div>
-    {% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+   <script>
+      $(document).ready(function(){
+         toastr.options = {"timeOut": "3000", "positionClass": "toast-top-right"}
+         console.log('toastr ready')
+
+         {% if messages %}
+            console.log('messages exist')
+            {% for message in messages %}
+            console.log('messages tesssss')
+            console.log("{{message}}")
+                       toastr["{{ message.tags|default:'info' }}"](
+                "{{ message|escapejs }}"
+            );
+            {% endfor %}
+         {% endif %}
+
+
+      })
+   </script>
+   {% endblock %}

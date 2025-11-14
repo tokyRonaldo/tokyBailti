@@ -6,6 +6,9 @@ from django.db import transaction
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.db import IntegrityError
+from django.contrib import messages
+from django.urls import reverse
 import secrets
 import string
 
@@ -102,21 +105,36 @@ def locataire_store(request):
 
                 password = generate_password()
 
-                user = User.objects.create(
-                    nom=nom,
-                    prenom=prenom,
-                    phone=mobile,
-                    email=email,
-                    date_naissance=date_naissance,
-                    lieu_naissance=lieu_naissance,
-                    sex=sex,
-                    adresse=adresse,
-                    password= make_password(password),
-                    role='locataire'
+                user, created = User.objects.get_or_create(
+                    email=email,                # critère pour trouver l'utilisateur
+                    defaults={                  # valeurs si on le crée
+                        "nom": nom,
+                        "prenom": prenom,
+                        "phone": mobile,
+                        "date_naissance": date_naissance,
+                        "lieu_naissance": lieu_naissance,
+                        "sex": sex,
+                        "adresse": adresse,
+                        "password": make_password(password),
+                        "role": "locataire"
+                    }
                 )
 
+                if not created:
+                    # Si l’utilisateur existe déjà → on met à jour
+                    user.nom = nom
+                    user.prenom = prenom
+                    user.phone = mobile
+                    user.date_naissance = date_naissance
+                    user.lieu_naissance = lieu_naissance
+                    user.sex = sex
+                    user.adresse = adresse
+                    # On ne remplace le password que si tu veux VRAIMENT le changer
+                    # user.password = make_password(password)
+                    user.role = "locataire"
+                    user.save()
 
-                Locataire.objects.create(
+                locataire = Locataire.objects.create(
                     nom=nom,
                     prenom=prenom,
                     mobile=mobile,
@@ -136,14 +154,45 @@ def locataire_store(request):
                     body=html_content,
                     from_email='ronaldotoky62@gmail.com',
                     to=['tokyronaldo75@gmail.com'],
-                    reply_to=['ronaldotoky62@gmail.com']
                 )
                 email.content_subtype = "html"
                 email.send() """
+                url = request.build_absolute_uri( reverse('dashboard') )
+
+                data_mail = {
+                    "locataire_nom": locataire.nom,
+                    "locataire_prenom": locataire.prenom,
+                    "locataire_email": locataire.email,
+                    "locataire_pwd": password,
+                    "proprietaire_nom": request.user.nom,
+                    "proprietaire_prenom": request.user.prenom,
+                    "proprietaire_email": request.user.email,
+                    "lien_bailti" : url,
+                }
+                print(data_mail)
+                print(data_mail['locataire_nom'])
+                
+                html_content = render_to_string('email/mon_email.html', {'data_mail': data_mail})
+                email = EmailMessage(
+                    subject='Email avec template',
+                    body=html_content,
+                    from_email='ronaldotoky62@gmail.com',
+                    to=[data_mail['locataire_email']],
+                )
+                email.content_subtype = "html"
+                email.send() 
+                messages.success(request, "sauvegarde succès")
+
 
 
         except Exception as e:
-            print("Erreur :", e)
+            if 'Duplicate entry' in str(e):
+                print('etttt')
+                messages.error(request, "❌ Cet email est déjà utilisé.")
+            else:
+                print('errrooo')
+                print(e)
+                messages.error(request, "Une erreur est survenue lors de la création de l'utilisateur.")
 
     return redirect('locataire')  # redirige vers une liste par exemple
 
