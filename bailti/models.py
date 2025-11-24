@@ -71,13 +71,15 @@ class Locataire(models.Model):
 # Table des locations
 # -------------------
 class Location(models.Model):
+    identifiant = models.CharField(max_length=100, null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="locations")
     locataire = models.ForeignKey(Locataire, on_delete=models.CASCADE, related_name="locations")
     date_debut = models.DateField()
     date_fin = models.DateField(null=True, blank=True)
     loyer = models.DecimalField(max_digits=10, decimal_places=2)
-    garantie = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    garantie = models.TextField(blank=True, null=True)
     commentaire = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="location_user" , null=True)
 
     def __str__(self):
         return f"Location de {self.locataire} - {self.property}"

@@ -5,13 +5,13 @@
    <div class="container mx-auto px-4 ">
       <div class="flex justify-between items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
          <div class="mes-proprietes ">
-            <h2 class="text-5xl font-bold my-4">Mes Proprietés</h2>
-            <p class="text-xl">Gérer vos bien immobilier</p>
+            <h2 class="text-5xl font-bold my-4">Locations</h2>
+            <p class="text-xl">Gérer les locations</p>
          </div>
          <div class="btn-add-propriete">
-            <a href="{% url 'locataire_create' %} " class="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded">
+            <a href="{% url 'location_create' %} " class="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded">
                <i class="fa fa-plus"></i>
-               Ajouter une proprieté
+               Ajouter une location
             </a>
          </div>
       </div>
@@ -30,44 +30,52 @@
             <thead class="text-lg uppercase bg-sky-200 ">
                 <tr>
                     <th scope="col" class="px-6 py-6">
-                        Nom
+                        Identifiant
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Prénom
+                        Bien
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Mobile
+                        Locataire
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Email
+                        Loyer
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Adresse
+                        Date de début
                     </th>
+                     <th scope="col" class="px-6 py-6">
+                        Date de Fin
+                    </th>
+
                     <th scope="col" class="px-6 py-6">
                         <span class="sr-only">Edit</span>
                     </th>
                 </tr>
             </thead>
             <tbody class="text-lg">
-               {% for locataire in locataires %}
+               {% for location in locations%}
 
                   <tr class="bg-white border-b border-gray-100 hover:bg-neutral-200 p-3">
-                     <th scope="row" class="px-6 py-5 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                           {{ locataire.nom }}
-                     </th>
-                     <td class="px-6 py-5">
-                           {{ locataire.prenom }}
+                     <td class="px-6 py-5s" >
+                           {{ location.identifiant }}
                      </td>
                      <td class="px-6 py-5">
-                           {{ locataire.mobile }}
+                           {{ location.property }}
                      </td>
                      <td class="px-6 py-5">
-                        {{ locataire.email }}
+                           {{ location.locataire }}
                      </td>
                      <td class="px-6 py-5">
-                           {{ locataire.adresse }}
+                        {{ location.loyer }}
                      </td>
+                     <td class="px-6 py-5">
+                           {{ location.date_debut |date:"Y-m-d" }}
+                     </td>
+                     <td class="px-6 py-5">
+                           {{ location.date_fin |date:"Y-m-d" }}
+                     </td>
+
 
                      <td class="px-6 py-5 text-right">
                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
@@ -87,4 +95,27 @@
       </div>
 
    </div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+   <script>
+      $(document).ready(function(){
+         toastr.options = {"timeOut": "3000", "positionClass": "toast-top-right"}
+         console.log('toastr ready')
+
+         {% if messages %}
+            console.log('messages exist')
+            {% for message in messages %}
+            console.log('messages tesssss')
+            console.log("{{message}}")
+                       toastr["{{ message.tags|default:'info' }}"](
+                "{{ message|escapejs }}"
+            );
+            {% endfor %}
+         {% endif %}
+
+
+      })
+   </script>
+
     {% endblock %}

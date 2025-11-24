@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User , Property, Locataire
+from .models import User , Property, Locataire , Location
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.db import transaction
@@ -22,11 +22,19 @@ def dashboard(request):
 @login_required(login_url='/user/login')
 def property(request):
     user = request.user
-    if user.is_authenticated :
-        print('user.email')
-    else :
-        print('utilisateur non connecter')
-    properties= Property.objects.all()
+    # properties= Property.objects.all()
+    if request.user.role == 'proprietaire' :
+
+        properties = Property.objects.filter(
+           user_id = request.user.id
+        )
+    else : 
+
+        properties = Property.objects.filter(
+            locations__locataire__proprietaire_user=request.user
+        ).distinct()
+        
+    
     
     return render(request , 'bailti/property/index.html',{'properties' : properties})
 
@@ -72,7 +80,7 @@ def property_store(request):
 @login_required(login_url='/user/login')
 def locataire(request):
 
-    locataires = Locataire.objects.all()
+    locataires = Locataire.objects.filter(proprietaire_user_id = request.user.id)
     return render(request , 'bailti/locataire/index.html',{'locataires' : locataires})
 
 # Create your views here.
@@ -169,8 +177,6 @@ def locataire_store(request):
                     "proprietaire_email": request.user.email,
                     "lien_bailti" : url,
                 }
-                print(data_mail)
-                print(data_mail['locataire_nom'])
                 
                 html_content = render_to_string('email/mon_email.html', {'data_mail': data_mail})
                 email = EmailMessage(
@@ -205,8 +211,20 @@ def proprietaire(request):
 # Create your views here.
 @login_required(login_url='/user/login')
 def locations(request):
-    users=User.objects.all()
-    return render(request , 'bailti/locations/index.html',{'users' : users})
+    user = request.user
+    # properties= Property.objects.all()
+    if request.user.role == 'proprietaire' :
+
+        locations = Location.objects.filter(
+           user_id = request.user.id
+        )
+    else : 
+
+        locations = Location.objects.filter(
+            locataire_id=request.user
+        )
+
+    return render(request , 'bailti/locations/index.html',{'locations' : locations})
 
 # Create your views here.
 @login_required(login_url='/user/login')
@@ -219,26 +237,37 @@ def location_create(request):
 @login_required(login_url='/user/login')
 def location_store(request):
     if request.method == 'POST':
-        nom = request.POST.get('nom')
-        prenom = request.POST.get('prenom')
-        mobile = request.POST.get('mobile')
-        email = request.POST.get('email')
-        date_naissance = request.POST.get('date_naissance')
-        lieu_naissance = request.POST.get('lieu_naissance')
-        revenu_mensuels = request.POST.get('revenu_mensuels')
-        adresse = request.POST.get('adresse')
-        user_id = 3 #mettre la valeur de celui authentifié
+        identifiant = request.POST.get('identifiant')
+        property = request.POST.get('property')
+        locataire = request.POST.get('locataire')
+        date_debut = request.POST.get('date_debut')
+        date_fin = request.POST.get('date_fin')
+        loyer = request.POST.get('loyer')
+        garantie = request.POST.get('garantie')
+        commentaire = request.POST.get('commentaire')
+        try:
+            with transaction.atomic():
 
-        Locataire.objects.create(
-            nom=nom,
-            prenom=prenom,
-            mobile=mobile,
-            email=email,
-            date_naissance=date_naissance,
-            lieu_naissance=lieu_naissance,
-            revenu_mensuels=revenu_mensuels,
-            adresse=adresse
-        )
+                Location.objects.create(
+                    identifiant=identifiant,
+                    property=Property.objects.get(id=property),
+                    locataire=Locataire.objects.get(id=locataire),
+                    date_debut=date_debut,
+                    date_fin=date_fin,
+                    loyer=loyer,
+                    garantie=garantie,
+                    commentaire=commentaire,
+                    user = User.objects.get(id=request.user.id)
+                )
+                messages.success(request, "sauvegarde succès")
+
+
+
+        except Exception as e:
+            print('errrooo')
+            print(e)
+            messages.error(request, "Une erreur est survenue lors de la création du location.")
+
 
     return redirect('locations')  # redirige vers une liste par exemple
 
