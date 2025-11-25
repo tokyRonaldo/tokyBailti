@@ -5,8 +5,8 @@
    <div class="container mx-auto px-4 ">
       <div class="flex justify-between items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
          <div class="mes-proprietes ">
-            <h2 class="text-5xl font-bold my-4">Mes Proprietés</h2>
-            <p class="text-xl">Gérer vos bien immobilier</p>
+            <h2 class="text-5xl font-bold my-4">Locataires</h2>
+            <p class="text-xl">Gérer les locataires</p>
          </div>
          <div class="btn-add-propriete">
             <a href="{% url 'locataire_create' %} " class="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded">
@@ -69,8 +69,10 @@
                            {{ locataire.adresse }}
                      </td>
 
-                     <td class="px-6 py-5 text-right">
-                           <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                     <td class="px-6 py-5 flex justify-center gap-2">
+                           <a href="#" class="font-medium   hover:underline"><i class="fa fa-eye"></i></a>
+                           <a href="{% url 'locataire_edit' locataire.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><i class="fa fa-edit"></i></a>
+                           <a href="{% url 'locataire_delete' locataire.id %}" class="font-medium text-red-600  hover:underline"><i class="fa fa-trash"></i></a>
                      </td>
                   </tr>
                {% endfor %}

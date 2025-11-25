@@ -54,7 +54,7 @@ class Locataire(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     mobile = models.CharField(max_length=20)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(default=True)
     date_naissance = models.DateField()
     lieu_naissance = models.CharField(max_length=150)
     revenu_mensuels = models.DecimalField(max_digits=10, decimal_places=2)

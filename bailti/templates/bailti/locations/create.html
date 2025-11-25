@@ -12,61 +12,105 @@
       <div class="form-create border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-8">
 
 
-      <form class="mx-auto" action="{% url 'location_store' %}" method="POST" enctype="multipart/form-data">
+         <form class="mx-auto" 
+               action="{% if location %}{% url 'location_update' location.id %}{% else %}{% url 'location_store' %}{% endif %}" 
+               method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-         <div class="mb-5">
-            <label for="identifiant" class="block mb-2 text-md font-medium ">Identifiant *</label>
-            <input type="text" name="identifiant" id="identifiant" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required >
-         </div>
+            <!-- Identifiant -->
+            <div class="mb-5">
+               <label for="identifiant" class="block mb-2 text-md font-medium">Identifiant *</label>
+               <input type="text" name="identifiant" id="identifiant" 
+                        value="{% if location %}{{ location.identifiant }}{% endif %}"
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+            </div>
 
-         <div class="mb-5">
-            <label for="property" class="block mb-2 text-md font-medium ">Bien *</label>
-            <select name="property" id="property" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-               {% for property in properties %}
-                  <option value="{{property.id}}">{{property.identifiant}}</option>
-               {% endfor %}
- 
-            </select>
-         </div>
+            <!-- Bien / Property -->
+            <div class="mb-5">
+               <label for="property" class="block mb-2 text-md font-medium">Bien *</label>
+               <select name="property" id="property" 
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                     {% for prop in properties %}
+                        <option value="{{ prop.id }}"
+                           {% if location and location.property.id == prop.id %}selected{% endif %}>
+                           {{ prop.identifiant }}
+                        </option>
+                     {% endfor %}
+               </select>
+            </div>
 
-         <div class="mb-5">
-            <label for="locataire" class="block mb-2 text-md font-medium ">Locataire *</label>
-            <select name="locataire" id="locataire" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-               {% for locataire in locataires %}
-                  <option value="{{locataire.id}}">{{locataire.nom}} {{locataire.prenom}}</option>
-               {% endfor %}
- 
-            </select>
-         </div>
+            <!-- Locataire -->
+            <div class="mb-5">
+               <label for="locataire" class="block mb-2 text-md font-medium">Locataire *</label>
+               <select name="locataire" id="locataire" 
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                     {% for loc in locataires %}
+                        <option value="{{ loc.id }}"
+                           {% if location and location.locataire.id == loc.id %}selected{% endif %}>
+                           {{ loc.nom }} {{ loc.prenom }}
+                        </option>
+                     {% endfor %}
+               </select>
+            </div>
 
-         <div class="mb-5">
-            <label for="date_debut" class="block mb-2 text-md font-medium ">Date début *</label>
-            <input type="date" id="date_debut" name="date_debut" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
-         </div>
-         <div class="mb-5">
-            <label for="date_fin" class="block mb-2 text-md font-medium ">Date fin *</label>
-            <input type="date" id="date_fin" name="date_fin" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
-         </div>
-         <div class="mb-5">
-            <label for="loyer" class="block mb-2 text-md font-medium ">Loyer *</label>
-            <input type="number" id="loyer" name="loyer" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
-         </div>
-         <div class="mb-5">
-            <label for="garantie" class="block mb-2 text-md font-medium ">Garantie </label>
-            <input type="text" id="garantie" name="garantie" class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "   required >
-         </div>
+            <!-- Date début -->
+            <div class="mb-5">
+               <label for="date_debut" class="block mb-2 text-md font-medium">Date début *</label>
+               <input type="date" id="date_debut" name="date_debut"
+                        value="{% if location %}{{ location.date_debut|date:'Y-m-d' }}{% endif %}"
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+            </div>
 
-         <div class="mb-5">
-            <label for="commentaire" class="block mb-2 text-sm font-medium ">Commentaire *</label>
-            <textarea id="commentaire" name="commentaire" class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required ></textarea>
-         </div>
+            <!-- Date fin -->
+            <div class="mb-5">
+               <label for="date_fin" class="block mb-2 text-md font-medium">Date fin *</label>
+               <input type="date" id="date_fin" name="date_fin"
+                        value="{% if location %}{{ location.date_fin|date:'Y-m-d' }}{% endif %}"
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+            </div>
 
+            <!-- Loyer -->
+            <div class="mb-5">
+               <label for="loyer" class="block mb-2 text-md font-medium">Loyer *</label>
+               <input type="number" id="loyer" name="loyer"
+                        value="{% if location %}{{ location.loyer }}{% endif %}"
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+            </div>
 
-         <div class="flex justify-end">
-            <button type="submit" class="text-white mt-6 bg-indigo-700 cursor-pointer hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistrer</button>
-         </div>
+            <!-- Garantie -->
+            <div class="mb-5">
+               <label for="garantie" class="block mb-2 text-md font-medium">Garantie</label>
+               <input type="text" id="garantie" name="garantie"
+                        value="{% if location %}{{ location.garantie }}{% endif %}"
+                        class="shadow-xs bg-gray-50 h-13 border border-gray-300 text-gray-900 text-sm rounded-lg
+                              focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+
+            <!-- Commentaire -->
+            <div class="mb-5">
+               <label for="commentaire" class="block mb-2 text-sm font-medium">Commentaire *</label>
+               <textarea id="commentaire" name="commentaire" 
+                           class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>{% if location %}{{ location.commentaire }}{% endif %}</textarea>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex justify-end">
+               <button type="submit" 
+                        class="text-white mt-6 bg-indigo-700 cursor-pointer hover:bg-indigo-800 focus:ring-4 focus:outline-none
+                              focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600
+                              dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                     Enregistrer
+               </button>
+            </div>
          </form>
+
 
       </div>
 
