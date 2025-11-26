@@ -28,16 +28,16 @@
             <div class="flex absolute w-full top-2 left-0  justify-between px-5 pb-3 pt-5 z-[9999]">
                <h1 class="text-3xl"> </h1>
                <div class="">
-                  <el-dropdown class="inline-block bg-gray-100 border border-neutral-400 rounded-2xl shadow-2xl">
+                  <el-dropdown class="inline-block bg-white border border-neutral-400 rounded-2xl shadow-2xl">
                      <button class="inline-flex w-full justify-center gap-x-1.5 rounded-md  px-2 py-3 text-xl font-semibold inset-ring-1 inset-ring-white/5 hover:bg-white/20">
                         <i class="fa fa-ellipsis-vertical"></i>
                      </button>
 
-                     <el-menu anchor="bottom end" popover class="w-35 bg-gray-600 origin-top-right rounded-md  outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+                     <el-menu anchor="bottom end" popover class="w-35 bg-white origin-top-right rounded-md  outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
                         <div class="py-1">
-                           <a href="#" class="block px-4 py-2 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Voir</a>
-                           <a href="{% url 'property_edit' property.id %}" class="block px-4 py-2 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Editer</a>
-                           <a href="{% url 'property_delete' property.id %}" class="block px-4 py-2 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Supprimer</a>
+                           <a href="#" class="block px-4 py-2 text-sm text-back-100 focus:bg-gray-100 focus:text-black focus:outline-hidden">Voir</a>
+                           <a href="{% url 'property_edit' property.id %}" class="block px-4 py-2 text-sm text-black-100 focus:bg-gray-100 focus:text-black focus:outline-hidden">Editer</a>
+                           <a href="{% url 'property_delete' property.id %}" class="block px-4 py-2 text-sm text-black-100 focus:bg-gray-100 focus:text-black focus:outline-hidden">Supprimer</a>
                         </div>
                      </el-menu>
                      </el-dropdown>

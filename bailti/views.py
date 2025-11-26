@@ -32,9 +32,10 @@ def property(request):
     else : 
 
         properties = Property.objects.filter(
-            locations__locataire__proprietaire_user=request.user
+            locations__locataire__user_locataire=request.user
         ).distinct()
-        
+        print('iciiiiiooijjjo')
+        print(properties)
     
     
     return render(request , 'bailti/property/index.html',{'properties' : properties})
@@ -221,6 +222,7 @@ def locataire_store(request):
                     mobile=mobile,
                     email=email,
                     date_naissance=date_naissance,
+                    password=password,
                     lieu_naissance=lieu_naissance,
                     revenu_mensuels=revenu_mensuels,
                     adresse=adresse,
