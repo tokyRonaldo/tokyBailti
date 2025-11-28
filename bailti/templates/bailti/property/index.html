@@ -25,6 +25,8 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-8">
          {% for property in properties %}
          <div class="card  relative h-150 bg-white rounded-2xl border-blue-100 border-1 shadow-lg hover:opacity-95 overflow-hidden">
+            {% if request.user.role == 'proprietaire' %}
+
             <div class="flex absolute w-full top-2 left-0  justify-between px-5 pb-3 pt-5 z-[9999]">
                <h1 class="text-3xl"> </h1>
                <div class="">
@@ -43,6 +45,7 @@
                      </el-dropdown>
                </div>
             </div>
+            {% endif %}
             <div class="flex w-full pb-2 pt-6">
                {% load static %}
 

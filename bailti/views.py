@@ -366,8 +366,12 @@ def locataire_delete(request, id):
 
 @login_required(login_url='/user/login')
 def proprietaire(request):
-    locataires = Locataire.objects.all()
-    return render(request , 'bailti/locataire/index.html',{'locataires' : locataires})
+
+    proprietaires = User.objects.filter(
+        proprietaire_user__user_locataire=request.user
+    ).distinct()
+    
+    return render(request , 'bailti/locataire/index.html',{'proprietaires' : proprietaires})
 
 # Create your views here.
 @login_required(login_url='/user/login')
@@ -380,9 +384,9 @@ def locations(request):
            user_id = request.user.id
         )
     else : 
-
+        print('dieeeeeeeeeeeeeeeeee')
         locations = Location.objects.filter(
-            locataire_id=request.user
+            locataire__user_locataire=request.user
         )
 
     return render(request , 'bailti/locations/index.html',{'locations' : locations})
