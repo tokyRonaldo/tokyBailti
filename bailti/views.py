@@ -384,7 +384,6 @@ def locations(request):
            user_id = request.user.id
         )
     else : 
-        print('dieeeeeeeeeeeeeeeeee')
         locations = Location.objects.filter(
             locataire__user_locataire=request.user
         )
@@ -505,6 +504,12 @@ def location_delete(request, id):
 def favorie(request):
     users=User.objects.all()
     return render(request , 'bailti/favorie.html',{'users' : users})
+
+# Create your views here.
+@login_required(login_url='/user/login')
+def quittance(request):
+    users=User.objects.all()
+    return render(request , 'bailti/quittance.html',{'users' : users})
 
 
 def generate_password(length=10):

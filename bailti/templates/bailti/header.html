@@ -1,7 +1,7 @@
 {% if user.role == 'proprietaire' %}
 <header class="sticky top-0 z-50 w-full border-blue-100 border-b-1 bg-white backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-xs">
     <div class="container mx-auto px-4">
-    <div class="flex h-20 items-center justify-between">
+    <div class="flex h-20 items-center justify-between gap-8">
         <div class="flex items-center gap-8">
         <div class="flex items-center gap-2 text-indigo-600">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2-icon lucide-building-2"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>
@@ -10,7 +10,7 @@
         
         </div>
         
-        <div class="flex items-center gap-8 text-xl">
+        <div class="flex items-center gap-3 text-xl">
             <div class="list-menu flex display gap-2 hover:bg-indigo-300 p-3 rounded-lg
               {% if request.resolver_match.url_name == 'dashboard' %} bg-indigo-400 {% endif %}">
 
@@ -39,6 +39,12 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
                 <a href="{% url 'favorie' %}"> Favories</a>
             </div>
+            <div class="list-menu gap-2 flex display hover:bg-indigo-300 p-3 rounded-lg
+                {% if request.resolver_match.url_name == 'quittance' %} bg-indigo-400 {% endif %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 012-2z" /><path stroke-linecap="round" stroke-linejoin="round" d="M9 9h6M9 13h6" /></svg>
+                <a href="{% url 'quittance' %}"> Quittances</a>
+            </div>
+
             <div class="list-menu gap-2 flex hover:bg-indigo-300 p-3 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
                 <span> Paramètre</span>

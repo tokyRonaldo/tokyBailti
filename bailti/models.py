@@ -84,3 +84,19 @@ class Location(models.Model):
 
     def __str__(self):
         return f"Location de {self.locataire} - {self.property}"
+    
+
+class Quittance(models.Model):
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    mois = models.PositiveSmallIntegerField(null=True)  # 1 à 12
+    annee = models.PositiveSmallIntegerField(null=True)  # exemple : 2025
+    montant = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    status = models.CharField(max_length=20, choices=[
+        ('non_paye', 'Non payé'),
+        ('paye', 'Payé'),
+        ('en_retard', 'En retard')
+    ], default='non_paye')
+    date_paiement = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Quittance {self.mois}/{self.annee} - {self.location}"

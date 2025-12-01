@@ -25,4 +25,5 @@ urlpatterns = [
     path('locations/delete/<int:id>/', views.location_delete,name="location_delete"),
     path('locations/update/<int:id>/', views.location_update,name="location_update"),
     path('favorie', views.favorie,name="favorie"),
+    path('quittance', views.quittance,name="quittance"),
 ]

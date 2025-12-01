@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bailti',
     'app_user',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +165,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tokyronaldo98@gmail.com'
 EMAIL_HOST_PASSWORD = 'yuxt myno ezlt iyvs '  # ou mot de passe application si 2FA activé
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CRONJOBS = [
+    ('0 8 * * *', 'bailti.management.commands.generate_quittance')
+]
