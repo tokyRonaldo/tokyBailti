@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import User , Property, Locataire , Location
+from .models import User , Property, Locataire , Location, Quittance
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.db import transaction
@@ -10,6 +10,10 @@ from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.contrib import messages
 from django.urls import reverse
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+#from weasyprint import HTML
+import weasyprint
 import secrets
 import string
 
@@ -505,11 +509,60 @@ def favorie(request):
     users=User.objects.all()
     return render(request , 'bailti/favorie.html',{'users' : users})
 
+
 # Create your views here.
 @login_required(login_url='/user/login')
-def quittance(request):
-    users=User.objects.all()
-    return render(request , 'bailti/quittance.html',{'users' : users})
+def quittance(request, id=None):
+    if(id):
+        quittances=Quittance.objects.filter(
+            location_id = id
+        )
+    else :
+        quittances=Quittance.objects.filter(
+            location__user =request.user
+        )
+    return render(request , 'bailti/quittance.html',{'quittances' : quittances})
+
+
+@login_required(login_url='/user/login')
+def confirm_paye_quittance(request,id):
+    
+    try:
+        with transaction.atomic():
+            quittance=Quittance.objects.get(
+                id=id
+            )
+            quittance.status='paye'
+            quittance.save()
+            messages.success(request, "Status de payement mis à jour avec succès.")
+    except Exception as e:
+        print("Erreur màj payement :", e)
+        messages.error(request, "Une erreur est survenue lors de la mis à jour de la statue de payment.")
+    
+
+    return redirect('quittance')
+
+@login_required
+def quittance_pdf(request, id):
+    quittance = get_object_or_404(Quittance, id=id)
+
+    try:
+        # Rendu HTML
+        html_string = render_to_string('pdf/quittance_pdf.html', {'quittance': quittance})
+
+        # Génération PDF avec base_url pour pouvoir charger images et CSS
+        #pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        pdf_file = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        # Réponse
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="quittance_{quittance.id}.pdf"'
+        return response
+
+    except Exception as e:
+        # Log l'erreur pour debug
+        print(f"Erreur génération PDF: {e}")
+        messages.error(request, "Une erreur est survenue lors de la génération du PDF.")
+        return redirect('quittance')
 
 
 def generate_password(length=10):

@@ -79,6 +79,7 @@
 
                      <td class="px-6 py-5 flex justify-center gap-2">
                         <a href="#" class="font-medium   hover:underline"><i class="fa fa-eye"></i></a>
+                        <a href="{% url 'quittance_location' location.id %}" class="font-medium text-blue-400 hover:underline" title="quittance"><i class="fa fa-file-invoice"></i></a>
                         {% if request.user.role == 'proprietaire' %}
                            <a href="{% url 'location_edit' location.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><i class="fa fa-edit"></i></a>
                            <a href="{% url 'location_delete' location.id %}" class="font-medium text-red-600  hover:underline"><i class="fa fa-trash"></i></a>

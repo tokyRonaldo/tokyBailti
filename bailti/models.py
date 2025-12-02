@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from datetime import date
 from django.db import models
 
 class User(AbstractUser):
@@ -74,7 +75,7 @@ class Locataire(models.Model):
 class Location(models.Model):
     identifiant = models.CharField(max_length=100, null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="locations")
-    locataire = models.ForeignKey(Locataire, on_delete=models.CASCADE, related_name="locations")
+    locataire = models.ForeignKey(Locataire, on_delete=models.CASCADE, related_name="locataire")
     date_debut = models.DateField()
     date_fin = models.DateField(null=True, blank=True)
     loyer = models.DecimalField(max_digits=10, decimal_places=2)
@@ -100,3 +101,7 @@ class Quittance(models.Model):
 
     def __str__(self):
         return f"Quittance {self.mois}/{self.annee} - {self.location}"
+    
+    def date_quittance(self):
+        d = date(self.annee, self.mois, 1)
+        return d.strftime("%d-%m-%Y")

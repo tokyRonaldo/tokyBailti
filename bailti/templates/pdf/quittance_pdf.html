@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quittance</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .info { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid #333; }
+        th, td { padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Quittance de loyer</h1>
+        <p>Mois : {{ quittance.mois }}/{{ quittance.annee }}</p>
+    </div>
+
+    <div class="info">
+        <p><strong>Locataire :</strong> {{ quittance.location.locataire.nom }} {{ quittance.location.locataire.prenom }}</p>
+        <p><strong>Propriétaire :</strong> {{ quittance.location.property.user.nom }} {{ quittance.location.property.user.prenom }}</p>
+        <p><strong>Adresse du bien :</strong> {{ quittance.location.property.adresse }}</p>
+        <p><strong>Montant :</strong> {{ quittance.montant }} €</p>
+        <p><strong>Statut :</strong> {{ quittance.get_status_display }}</p>
+    </div>
+</body>
+</html>

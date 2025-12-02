@@ -3,12 +3,13 @@
    {% block content %}
 
    <div class="container mx-auto px-4 ">
-      <div class="flex justify-between items-center py-5">
+      <div class="flex justify-between items-center py-5 border-blue-100 border-b-1 shadow-xs bg-white p-5 rounded-lg my-4">
          <div class="mes-proprietes ">
-            <h2 class="text-5xl font-bold my-4">Locations</h2>
-            <p class="text-xl">Gérez vos locations et les contrats</p>
+            <h2 class="text-5xl font-bold my-4">Quittances</h2>
+            <p class="text-xl">Gérer les quittances</p>
          </div>
-
+         <div class="btn-add-propriete">
+         </div>
       </div>
 
       <div class="flex mt-8 mb-4 bg-white search-bar gap-4 items-center border border-blue-100 rounded-2xl shadow-2xl w-1/2 p-5 text-xl focus-within:border-blue-300 focus-within:border-6" >
@@ -22,77 +23,134 @@
 
     <div class="relative overflow-x-auto bg-white shadow-md sm:rounded-2xl py-6 my-10">
         <table class="w-full text-sm text-left bg-white rtl:text-right py-8">
-            <thead class="text-lg uppercase bg-sky-50 ">
+            <thead class="text-lg uppercase bg-sky-200 ">
                 <tr>
                     <th scope="col" class="px-6 py-6">
-                        Product name
+                        location
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Color
+                        Date
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Category
+                        Montant
                     </th>
                     <th scope="col" class="px-6 py-6">
-                        Price
+                        Status
                     </th>
-                    <th scope="col" class="px-6 py-6">
-                        <span class="sr-only">Edit</span>
+                    <th scope="col" class="px-6 py-6 text-center">
+                        Action
                     </th>
                 </tr>
             </thead>
             <tbody class="text-lg">
-                <tr class="bg-white border-b border-gray-100 hover:bg-neutral-100 p-3">
-                    <th scope="row" class="px-6 py-5 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td class="px-6 py-5">
-                        Silver
-                    </td>
-                    <td class="px-6 py-5">
-                        Laptop
-                    </td>
-                    <td class="px-6 py-5">
-                        $2999
-                    </td>
-                    <td class="px-6 py-5 text-right">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b  border-gray-100 hover:bg-neutral-100 ">
-                    <th scope="row" class="px-6 py-5 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Microsoft Surface Pro
-                    </th>
-                    <td class="px-6 py-5">
-                        White
-                    </td>
-                    <td class="px-6 py-5">
-                        Laptop PC
-                    </td>
-                    <td class="px-6 py-5">
-                        $1999
-                    </td>
-                    <td class="px-6 py-5 text-right">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr class="bg-white hover:bg-neutral-100 ">
-                    <th scope="row" class="px-6 py-5 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Magic Mouse 2
-                    </th>
-                    <td class="px-6 py-5">
-                        Black
-                    </td>
-                    <td class="px-6 py-5">
-                        Accessories
-                    </td>
-                    <td class="px-6 py-5">
-                        $99
-                    </td>
-                    <td class="px-6 py-5 text-right">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    </td>
-                </tr>
+               {% if request.user.role == 'proprietaire' %}
+
+                {% for quittance in quittances %}
+
+                     <tr class="bg-white border-b border-gray-100 hover:bg-neutral-200 p-3">
+                        <td class="px-6 py-5">
+                              {{ quittance.location }}
+                        </td>
+                        <td class="px-6 py-5">
+                              {{ quittance.date_quittance }}
+                        </td>
+                        <td class="px-6 py-5">
+                              {{ quittance.montant }}
+                        </td>
+                        <td class="px-6 py-5">
+                            {% if quittance.status == 'paye' %}
+                                <span class="text-green-600">
+                                    {{ quittance.get_status_display }}
+                                </span>
+                            {% elif quittance.status == 'non_paye' %}
+                                <span class="text-red-600">
+                                    {{ quittance.get_status_display }}
+                                </span>
+                            {% else %}
+                                <span class="text-blue-500">
+                                    {{ quittance.get_status_display }}
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-5 flex justify-center gap-2">
+                            {% if quittance.status == 'paye' %}
+                                <button command="show-modal" commandfor="dialog" class="text-gray-100 font-medium shadow-2lg bg-blue-300 rounded-lg cursor-not-allowed p-1 px-3" disabled>Marquer payé</button>
+                                {% else %}
+                                <button command="show-modal" commandfor="dialog" class="text-gray-100 font-medium shadow-2lg bg-blue-500 rounded-lg hover:bg-blue-400 cursor-pointer p-1 px-3">Marquer payé</button>
+                                    <el-dialog>
+                                    <dialog id="dialog" aria-labelledby="dialog-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+                                        <el-dialog-backdrop class="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"></el-dialog-backdrop>
+
+                                        <div tabindex="0" class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+                                        <el-dialog-panel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+                                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div class="sm:flex sm:items-start">
+                                                <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 text-red-600">
+                                                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                </div>
+                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                <h3 id="dialog-title" class="text-base font-semibold text-gray-900">Confirm!</h3>
+                                                <div class="mt-2">
+                                                    <p class="text-sm text-gray-700">Êtes vous sur de mettre le status de  ce quittance en payé.</p>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                <button type="button" command="close" commandfor="dialog" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 bg-gray-200 hover:bg-gray-300 sm:mt-0 sm:w-auto cursor-pointer">Cancel</button>
+                                                <a href="{% url 'confirm_paye_quittance' quittance.id %}" type="button" command="close" commandfor="dialog" class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 sm:ml-3 sm:w-auto cursor-pointer">Confirm</a>
+                                            </div>
+                                        </el-dialog-panel>
+                                        </div>
+                                    </dialog>
+                                </el-dialog>
+                            {% endif %}
+                        </td>
+                     </tr>
+                {% endfor %}
+               {% else %}
+                {% for quittance in quittances %}
+
+                     <tr class="bg-white border-b border-gray-100 hover:bg-neutral-200 p-3">
+                        <td class="px-6 py-5">
+                              {{ quittance.location }}
+                        </td>
+                        <td class="px-6 py-5">
+                              {{ quittance.date_quittance }}
+                        </td>
+                        <td class="px-6 py-5">
+                              {{ quittance.montant }}
+                        </td>
+                        <td class="px-6 py-5">
+                            {% if quittance.status == 'paye' %}
+                                <span class="text-green-600">
+                                    {{ quittance.get_status_display }}
+                                </span>
+                            {% elif quittance.status == 'non_paye' %}
+                                <span class="text-red-600">
+                                    {{ quittance.get_status_display }}
+                                </span>
+                            {% else %}
+                                <span class="text-blue-500">
+                                    {{ quittance.get_status_display }}
+                                </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="px-2 py-5 flex justify-center gap-2">
+                            <a href="#" class="font-medium   hover:underline"><i class="fa fa-eye"></i></a>
+                            {% if quittance.status == 'paye' %}
+                                <a href="{% url 'quittance_pdf' quittance.id %}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" title="quittance pdf"><i class="fa-solid fa-file-pdf"></i></a>
+
+                            {% endif %}
+
+
+                        </td>
+                     </tr>
+                {% endfor %}
+               {% endif %}
             </tbody>
         </table>
     </div>
@@ -105,4 +163,25 @@
       </div>
 
    </div>
-    {% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+   <script>
+      $(document).ready(function(){
+         toastr.options = {"timeOut": "3000", "positionClass": "toast-top-right"}
+         console.log('toastr ready')
+
+         {% if messages %}
+            console.log('messages exist')
+            {% for message in messages %}
+            console.log('messages tesssss')
+            console.log("{{message}}")
+                       toastr["{{ message.tags|default:'info' }}"](
+                "{{ message|escapejs }}"
+            );
+            {% endfor %}
+         {% endif %}
+
+
+      })
+   </script>
+   {% endblock %}

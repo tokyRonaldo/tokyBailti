@@ -26,4 +26,9 @@ urlpatterns = [
     path('locations/update/<int:id>/', views.location_update,name="location_update"),
     path('favorie', views.favorie,name="favorie"),
     path('quittance', views.quittance,name="quittance"),
+    path('quittance/<int:id>/', views.quittance,name="quittance_location"),
+    path('confirm_paye_quittance/<int:id>/', views.confirm_paye_quittance,name="confirm_paye_quittance"),
+    path('quittance_pdf/<int:id>/', views.quittance_pdf,name="quittance_pdf"),
+    
+    
 ]
