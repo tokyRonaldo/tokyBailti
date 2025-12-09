@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('bailti.urls')),
     path('user/', include('app_user.urls')),
+    path("chat/", include("chat.urls", namespace="chat")),
+
 ]
 
 from django.conf import settings

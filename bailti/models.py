@@ -105,3 +105,25 @@ class Quittance(models.Model):
     def date_quittance(self):
         d = date(self.annee, self.mois, 1)
         return d.strftime("%d-%m-%Y")
+
+
+class Conversation(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)
+    participants = models.ManyToManyField(User, related_name="conversations")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title or f"Conversation {self.id}"
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, related_name="messages", on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name="messages_sent", on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ("created_at",)
+
+    def __str__(self):
+        return f"Message {self.id} by {self.sender}"

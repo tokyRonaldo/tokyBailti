@@ -2,6 +2,7 @@
 
    {% block content %}
 
+{% if user.role == 'proprietaire' %}
    <!-- Main Content -->
    <main class="max-w-7xl mx-auto px-6 py-8">
        <!-- Page Header -->
@@ -234,4 +235,282 @@
            </div>
        </div>
    </main>
+{% else %}
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Bienvenue, Jean Dupont</h1>
+            <p class="text-gray-600">Gérez votre logement et vos paiements en un seul endroit</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Loyer à Payer -->
+            <div class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-600 text-sm font-medium">Loyer à Payer</h3>
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exclamation text-red-600"></i>
+                    </div>
+                </div>
+                <p class="text-2xl font-bold text-gray-900 mb-2">850€</p>
+                <p class="text-xs text-gray-500">Dû le 5 janvier 2025</p>
+            </div>
+
+            <!-- Date de Paiement -->
+            <div class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-600 text-sm font-medium">Prochaine Date</h3>
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-calendar text-blue-600"></i>
+                    </div>
+                </div>
+                <p class="text-2xl font-bold text-gray-900 mb-2">05 Jan</p>
+                <p class="text-xs text-gray-500">Vendredi</p>
+            </div>
+
+            <!-- Statut du Paiement -->
+            <div class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-600 text-sm font-medium">Statut du Paiement</h3>
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-clock text-orange-600"></i>
+                    </div>
+                </div>
+                <p class="text-2xl font-bold text-gray-900 mb-2">En Attente</p>
+                <p class="text-xs text-gray-500">Dernier paiement: 5 déc</p>
+            </div>
+
+            <!-- Demandes de Maintenance -->
+            <div class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-600 text-sm font-medium">Maintenance</h3>
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tools text-green-600"></i>
+                    </div>
+                </div>
+                <p class="text-2xl font-bold text-gray-900 mb-2">1</p>
+                <p class="text-xs text-gray-500">En cours</p>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Mon Logement -->
+            <div class="lg:col-span-2 bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-900">Mon Logement</h2>
+                </div>
+                
+                <div class="p-6">
+                    <div class="mb-6">
+                        <div class="w-full h-64 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center mb-4">
+                            <div class="text-gray-400 text-center">
+                                <i class="fas fa-image text-4xl mb-2"></i>
+                                <p>Photo du logement</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Appartement - 42 Rue de la Paix</h3>
+                            <p class="text-gray-600 text-sm">Paris 75001 - Studio</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 py-4 border-y border-gray-200">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Superficie</p>
+                                <p class="text-lg font-semibold text-gray-900">45 m²</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Étage</p>
+                                <p class="text-lg font-semibold text-gray-900">2e étage</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Équipements</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">WiFi</span>
+                                <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Cuisine équipée</span>
+                                <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Salle de bain</span>
+                            </div>
+                        </div>
+
+                        <button class="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                            Voir les détails
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informations Propriétaire -->
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-900">Propriétaire / Gestionnaire</h2>
+                </div>
+
+                <div class="p-6 space-y-6">
+                    <!-- Propriétaire Card -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Marie Martin</p>
+                                <p class="text-xs text-gray-500">Propriétaire</p>
+                            </div>
+                        </div>
+                        <button class="w-full px-3 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium border border-blue-200 rounded hover:bg-blue-50 transition-colors">
+                            <i class="fas fa-phone mr-2"></i>Contacter
+                        </button>
+                    </div>
+
+                    <!-- Gestionnaire Card -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-briefcase text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Immobilier Plus</p>
+                                <p class="text-xs text-gray-500">Gestionnaire</p>
+                            </div>
+                        </div>
+                        <button class="w-full px-3 py-2 text-sm text-green-600 hover:text-green-700 font-medium border border-green-200 rounded hover:bg-green-50 transition-colors">
+                            <i class="fas fa-envelope mr-2"></i>Contacter
+                        </button>
+                    </div>
+
+                    <!-- Urgence -->
+                    <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                        <p class="text-xs font-semibold text-red-600 uppercase mb-2">Urgence 24h/24</p>
+                        <p class="text-lg font-bold text-red-600">06 12 34 56 78</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment History & Maintenance Requests -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Historique des Paiements -->
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900">Historique des Paiements</h2>
+                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">Voir tout</button>
+                </div>
+
+                <div class="divide-y divide-gray-200">
+                    <!-- Payment Item 1 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Loyer - Décembre 2024</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Payé</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <p class="text-gray-600">5 décembre 2024</p>
+                            <p class="font-semibold text-gray-900">850€</p>
+                        </div>
+                    </div>
+
+                    <!-- Payment Item 2 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Loyer - Novembre 2024</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Payé</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <p class="text-gray-600">3 novembre 2024</p>
+                            <p class="font-semibold text-gray-900">850€</p>
+                        </div>
+                    </div>
+
+                    <!-- Payment Item 3 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Loyer - Octobre 2024</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Payé</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <p class="text-gray-600">2 octobre 2024</p>
+                            <p class="font-semibold text-gray-900">850€</p>
+                        </div>
+                    </div>
+
+                    <!-- Payment Item 4 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Loyer - Septembre 2024</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Payé</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <p class="text-gray-600">5 septembre 2024</p>
+                            <p class="font-semibold text-gray-900">850€</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-50 border-t border-gray-200 text-center">
+                    <button class="text-blue-600 hover:text-blue-700 font-medium text-sm">Télécharger un reçu</button>
+                </div>
+            </div>
+
+            <!-- Demandes de Maintenance -->
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900">Demandes de Maintenance</h2>
+                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Nouvelle
+                    </button>
+                </div>
+
+                <div class="divide-y divide-gray-200">
+                    <!-- Maintenance Request 1 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors border-l-4 border-orange-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Fuite robinet salle de bain</p>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">En cours</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Crée le 28 décembre 2024</p>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <i class="fas fa-user text-gray-400"></i>
+                            <p>Assigné à: Plombier Pro</p>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance Request 2 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors border-l-4 border-green-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Révision chauffage</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Terminé</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Crée le 15 décembre 2024</p>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <i class="fas fa-user text-gray-400"></i>
+                            <p>Terminé par: Chauffagiste Expert</p>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance Request 3 -->
+                    <div class="p-4 hover:bg-gray-50 transition-colors border-l-4 border-green-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="font-semibold text-gray-900">Changement serrure</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Terminé</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Crée le 20 novembre 2024</p>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <i class="fas fa-user text-gray-400"></i>
+                            <p>Terminé par: Serrurier Pro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endif %}
+
     {% endblock %}

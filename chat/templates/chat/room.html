@@ -1,0 +1,80 @@
+{% extends "bailti/base.html" %}
+{% block content %}
+<div class="max-w-3xl mx-auto h-screen flex flex-col p-4">
+  <div class="flex items-center justify-between border-b pb-2">
+    <h2 class="text-xl font-semibold">{{ conversation.title|default:"Conversation" }}</h2>
+    <a href="{% url 'chat:conversation_list' %}" class="text-sm text-gray-500">Retour</a>
+  </div>
+
+  <div id="messages" class="flex-1 overflow-auto py-4 space-y-3">
+    {% for m in messages %}
+      <div class="max-w-[75%] 
+        {% if m.sender == request.user %}
+            ml-auto bg-blue-500 text-white
+        {% else %}
+            bg-gray-100 text-gray-800
+        {% endif %}
+        p-2 rounded-lg max-w-xs
+      
+      ">
+        <div class="text-sm">{{ m.content }}</div>
+        <div class="text-xs mt-1 text-gray-200">{{ m.created_at|date:"H:i d/m" }}</div>
+        {% if m.sender != request.user %}
+          <div class="text-xs text-gray-600">par {{ m.sender }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-2">
+    <form id="chat-form" class="flex gap-2">
+      <input id="message-input" autocomplete="off" class="flex-1 p-2 border rounded" placeholder="Écris un message..." />
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Envoyer</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const conversationId = "{{ conversation.id }}";
+    const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+    const chatSocket = new WebSocket(wsScheme + '://' + window.location.host + '/ws/chat/' + conversationId + '/');
+
+    const messagesEl = document.getElementById("messages");
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("message-input");
+
+    function appendMessage(data, mine=false) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "max-w-[75%] " + (mine ? "ml-auto bg-blue-500 text-white" : "bg-gray-100 text-gray-800") + " p-3 rounded-lg";
+      wrapper.innerHTML = `<div class="text-sm">${data.message}</div>
+        <div class="text-xs mt-1 text-gray-200">${new Date(data.created_at).toLocaleString()}</div>
+        ${!mine ? `<div class="text-xs text-gray-600">par ${data.sender_username}</div>` : ''}`;
+      messagesEl.appendChild(wrapper);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    chatSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      // Si l'émetteur est moi, j'affiche aussi (sinon je verrais l'ancien message après)
+      const mine = data.sender_id == {{ request.user.id|default:0 }};
+      appendMessage(data, mine);
+    };
+
+    chatSocket.onclose = function(e) {
+      console.error('Socket fermé', e);
+    };
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+      chatSocket.send(JSON.stringify({ "message": message }));
+      input.value = "";
+    });
+
+    // scroll initial
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  })();
+</script>
+{% endblock %}

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bailti',
     'app_user',
+    'chat',
+    'channels',
     'django_crontab',
 ]
 
@@ -169,3 +171,14 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CRONJOBS = [
     ('0 8 * * *', 'bailti.management.commands.generate_quittance')
 ]
+
+ASGI_APPLICATION = "bailti.asgi.application"
+
+CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [("127.0.0.1", 6379)],
+            },
+        }
+    }
