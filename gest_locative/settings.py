@@ -172,7 +172,7 @@ CRONJOBS = [
     ('0 8 * * *', 'bailti.management.commands.generate_quittance')
 ]
 
-ASGI_APPLICATION = "bailti.asgi.application"
+ASGI_APPLICATION = "gest_locative.asgi.application"
 
 CHANNEL_LAYERS = {
         "default": {
