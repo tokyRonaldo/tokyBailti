@@ -37,9 +37,13 @@
 <script>
   (function() {
     const conversationId = "{{ conversation.id }}";
+    //const wsScheme = "{{ WS_SCHEME }}";
+    const wsHost = "{{ WS_HOST }}";
+    const wsPort = "{{ WS_PORT }}";
     const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-    const chatSocket = new WebSocket(wsScheme + '://' + window.location.host + '/ws/chat/' + conversationId + '/');
-
+    const chatSocket = new WebSocket(
+        wsScheme + "://" + wsHost + ":" + wsPort + "/ws/chat/" + conversationId + "/"
+    );
     const messagesEl = document.getElementById("messages");
     const form = document.getElementById("chat-form");
     const input = document.getElementById("message-input");

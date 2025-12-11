@@ -182,3 +182,12 @@ CHANNEL_LAYERS = {
             },
         }
     }
+
+
+from dotenv import load_dotenv
+
+load_dotenv()  # Charge le .env
+
+WEBSOCKET_PORT = os.getenv("WEBSOCKET_PORT", "8000")
+WEBSOCKET_SCHEME = os.getenv("WEBSOCKET_SCHEME", "ws")
+WEBSOCKET_HOST = os.getenv("WEBSOCKET_HOST", "localhost")
