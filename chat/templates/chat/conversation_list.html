@@ -61,9 +61,9 @@
         <li class="p-3 rounded shadow-sm bg-white">
           <a class="flex justify-between items-center" href="{% url 'chat:conversation_room' c.pk %}">
             <div>
-              <div class="font-medium">{{ c.title|default:"Conversation" }}</div>
+              <div class="font-medium">{{ c.other_user }}</div>
               <div class="text-sm text-gray-500">
-                Locataire: {{ c.other_user }}
+                {{ c.message_preview }}
               </div>
             </div>
             <div class="text-sm text-gray-400">{{ c.created_at|date:"d M Y H:i" }}</div>

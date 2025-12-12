@@ -19,6 +19,8 @@ def conversation_list(request):
     convs = request.user.conversations.all().order_by("-created_at")
     for c in convs:
         c.other_user = c.participants.exclude(id=request.user.id).first()
+        last_msg = c.messages.last()
+        c.message_preview = last_msg.content[:10] if last_msg else ""
     return render(request, "chat/conversation_list.html", {"conversations": convs,"locataires" : locataires})
 
 @login_required
