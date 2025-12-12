@@ -112,6 +112,9 @@ class Conversation(models.Model):
     participants = models.ManyToManyField(User, related_name="conversations")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_other_user(self, user):
+        return self.participants.exclude(id=user.id).first()
+
     def __str__(self):
         return self.title or f"Conversation {self.id}"
 

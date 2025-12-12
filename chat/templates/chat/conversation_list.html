@@ -63,7 +63,7 @@
             <div>
               <div class="font-medium">{{ c.title|default:"Conversation" }}</div>
               <div class="text-sm text-gray-500">
-                Participants: {{ c.participants.all|join:", " }}
+                Locataire: {{ c.other_user }}
               </div>
             </div>
             <div class="text-sm text-gray-400">{{ c.created_at|date:"d M Y H:i" }}</div>

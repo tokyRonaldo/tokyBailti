@@ -17,7 +17,8 @@ User = get_user_model()
 def conversation_list(request):
     locataires = Locataire.objects.filter(proprietaire_user_id = request.user.id)
     convs = request.user.conversations.all().order_by("-created_at")
-
+    for c in convs:
+        c.other_user = c.participants.exclude(id=request.user.id).first()
     return render(request, "chat/conversation_list.html", {"conversations": convs,"locataires" : locataires})
 
 @login_required
@@ -25,10 +26,12 @@ def conversation_room(request, pk):
     conv = get_object_or_404(Conversation, pk=pk)
     if request.user not in conv.participants.all():
         return redirect("chat:conversation_list")
+    destinateur = conv.participants.exclude(id=request.user.id).first()
     messages = conv.messages.select_related("sender").all()
     return render(request, "chat/room.html", {
         "conversation": conv,
         "messages": messages,
+        "destinateur": destinateur,
         "WS_PORT": settings.WEBSOCKET_PORT,
         "WS_HOST": settings.WEBSOCKET_HOST,
         "WS_SCHEME": settings.WEBSOCKET_SCHEME,
